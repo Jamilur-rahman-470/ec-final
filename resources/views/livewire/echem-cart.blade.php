@@ -49,27 +49,20 @@
     <br>
     <br>
 
-    <form action="{{ route('cart.coupon') }}" method="get">
-        <div class="coupon form-inline ">
-            <input id="coupon_code" class="input-text form-control" name="coupon_code" value=""
-                placeholder="Coupon code" type="text">
-            <input class="button btn btn-primary" name="apply_coupon" value="Apply coupon" type="submit">
-        </div>
-    </form>
-
-
+    <div class="reward-forms">
+        <form action="{{ route('cart.coupon') }}" method="get">
+            <h4>Have A Cupon?</h4>
+            <div class="coupon form-inline ">
+                <input id="coupon_code" class="input-text form-control" name="coupon_code" value=""
+                    placeholder="Coupon code" type="text">
+                <input class="button btn btn-primary" name="apply_coupon" value="Apply coupon" type="submit">
+            </div>
+        </form>
+        <a href="{{ route('cart.checkout') }}" class="btn btn-success my-3">Proceed to checkout</a>
+    </div>
     <div class="row">
-        <div class="col-md-5 ml-auto">
+        <div class='my-5'>
             <div class="cart-page-total">
-                <div class="card p-4">
-                    <h2 class="mt-3">Cart totals</h2>
-                    <ul>
-                        <li class="h5  text-success">SubTotal: <span>{{ \Cart::session(auth()->id())->getSubTotal() }}
-                                BDT</span></li>
-                        <li class="h5  text-success">Total: <span>{{ \Cart::session(auth()->id())->getTotal() }}
-                                BDT</span></li>
-                    </ul>
-                </div>
                 @php
                 $items = \Cart::session(auth()->id())->getContent();
                 $wallet = 0.0;
@@ -79,19 +72,19 @@
                 $reward = $reward + $item['associatedModel']['reward_point'];
                 }
                 @endphp
-                <div class="card p-4 my-3">
-                    <h2 class="mt-4">
+                <h3>Rewards Earned</h3>
+                <div class="card p-4">
+                    <h4>
                         Ammount To be Added to Wallet
-                    </h2>
-                    <p class="h5 mt-3 text-success">{{ $wallet }} BDT</p>
+                    </h4>
+                    <p class="h4 text-success">{{ $wallet }} BDT</p>
                 </div>
-                <div class="card p-4 my-3">
-                    <h2 class="mt-4">
+                <div class="card p-4">
+                    <h4>
                         Reward Points
-                    </h2>
-                    <p class="h5 mt-3 text-success">{{ $reward }}</p>
+                    </h4>
+                    <p class="h4 text-success">{{ $reward }}</p>
                 </div>
-                <a href="{{ route('cart.checkout') }}" class="btn btn-success my-3">Proceed to checkout</a>
             </div>
         </div>
     </div>

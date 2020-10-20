@@ -35,7 +35,7 @@ Route::resource('orders', 'OrderController')->middleware('auth');
 
 Route::resource('shops', 'ShopController')->middleware('auth');
 
-Route::resource('wishlists','WishlistController')->middleware('auth');
+Route::resource('wishlists', 'WishlistController')->middleware('auth');
 
 Route::get('/products/search', 'ProductController@search')->name('products.search');
 
@@ -51,7 +51,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::group(['prefix' => 'seller', 'middleware' => 'auth', 'as' => 'seller.', 'namespace' => 'Seller'], function () {
 
-    Route::redirect('/','seller/orders');
+    Route::redirect('/', 'seller/orders');
 
     Route::resource('/orders',  'OrderController');
 
@@ -59,3 +59,5 @@ Route::group(['prefix' => 'seller', 'middleware' => 'auth', 'as' => 'seller.', '
 });
 
 Route::get('/user/dashboard', 'DhashboardController@index')->name('dash')->middleware('auth');
+Route::get('/gifts', 'GiftPageController@index')->name('gift');
+Route::resource('gift-cards', 'GiftCardPurchaseController')->middleware('auth');

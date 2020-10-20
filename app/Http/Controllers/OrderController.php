@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\GiftCardPurchase;
 use App\Order;
 use App\RewardPoint;
 use Illuminate\Http\Request;
@@ -152,7 +153,62 @@ class OrderController extends Controller
             return redirect()->route('home')->withMessage('Order has been placed');
         }
 
+        // Gift Card
 
+        if (request('payment_method') == 'gift_card') {
+
+            $price = \Cart::session(auth()->id())->getTotal();
+            $card = GiftCardPurchase::where([
+                ['user_id', '=', auth()->id()],
+                ['uid', '=', $request->input('uid')]
+            ])->get();
+
+            if ($card->count()) {
+                foreach ($card as $item) {
+                    if ($item->uid === $request->input('uid')) {
+                        if ($price <= $item->amount and $item->purchas_done) {
+                            DB::table('gift_card_purchases')
+                                ->where([
+                                    ['user_id', '=', auth()->id()],
+                                    ['uid', '=', $request->input('uid')]
+                                ])
+                                ->decrement('amount', $price);
+
+                            $order->payment_method = 'gift_card';
+                            $order->is_paid = 1;
+                            $order->save();
+                            $order->generateSubOrders();
+                            $cartItems = \Cart::session(auth()->id())->getContent();
+                            foreach ($cartItems as $items) {
+                                $order->items()->attach($items->id, ['price' => $items->price, 'quantity' => $items->quantity]);
+                            }
+
+                            \Cart::session(auth()->id())->clear();
+                            return redirect()->route('dash')->withMessage('Order Placed');
+                        } else {
+                            return redirect()->route('cart.checkout')->withErrors('Not enough in card');
+                        }
+                    }
+                }
+                $newCard = GiftCardPurchase::where([
+                    ['user_id', '=', auth()->id()],
+                    ['uid', '=', $request->input('uid')]
+                ])->get();
+                foreach ($newCard as $card) {
+                    # code...
+                    if ($newCard->amount <= 0) {
+                        DB::table('gift_card_purchases')
+                            ->where([
+                                ['user_id', '=', auth()->id()],
+                                ['id', '=', $card->id]
+                            ])
+                            ->delete();
+                    }
+                }
+            } else {
+                return redirect()->route('cart.checkout')->withErrors('This Is Not Your Card');
+            }
+        }
         //Point
         if (request('payment_method') == 'reward_point') {
             $check = RewardPoint::where('user_id', auth()->id())->get();

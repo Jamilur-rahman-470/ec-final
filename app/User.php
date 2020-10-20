@@ -10,7 +10,11 @@ class User extends \TCG\Voyager\Models\User
 {
     use Notifiable;
 
-
+    public function gift_card_purchase()
+    {
+        return $this->hasMany(GiftCardPurchase::class, 'user_id');
+    }
+    
     public function wishlists()
     {
         return $this->hasMany(Wishlist::class, 'user_id');

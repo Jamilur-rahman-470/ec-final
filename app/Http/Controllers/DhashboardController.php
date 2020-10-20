@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\GiftCardPurchase;
 use App\Order;
 use App\RewardPoint;
 use App\Wallet;
@@ -15,6 +16,12 @@ class DhashboardController extends Controller
         $wallet = Wallet::where('user_id', auth()->id())->first()->get();
         $orders = Order::where('user_id', auth()->id())->get();
         $reward = RewardPoint::where('user_id', auth()->id())->get();
-        return view('dashboard', ['wallet' => $wallet, 'orders' => $orders, 'reward' => $reward]);
+        $gift_card = GiftCardPurchase::where('user_id', auth()->id())->get();
+        return view('dashboard', [
+            'wallet' => $wallet, 
+            'orders' => $orders, 
+            'reward' => $reward,
+            'cards' => $gift_card
+        ]);
     }
 }

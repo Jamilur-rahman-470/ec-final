@@ -439,3 +439,103 @@
         }
     }
 }
+
+.gift-cards {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px 20px;
+    @include media("<=tablet") {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @include media("<=phone") {
+        grid-template-columns: 1fr;
+    }
+}
+
+.reward-products {
+    .cards {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px 20px;
+        @include media("<=tablet") {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        @include media("<=phone") {
+            grid-template-columns: 1fr;
+        }
+    }
+    .product-card {
+        border: 2px solid rgba($color: #74a32f, $alpha: 0.2);
+        &:hover {
+            .btns {
+                display: flex;
+            }
+        }
+        position: relative;
+        width: 100%;
+
+        .img {
+            width: 100%;
+            img {
+                width: 100%;
+            }
+        }
+        .body {
+            text-align: center;
+            h2 {
+                font-size: 16px;
+                font-weight: 600;
+                color: #121212;
+            }
+
+            .price {
+                font-size: 16px;
+                color: #cf2a2a;
+                font-weight: bolder;
+            }
+        }
+        .btns {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 5px 5px 10px rgba(1, 1, 1, 0.5);
+        }
+    }
+}
+
+.cart-page-total {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px 20px;
+    @include media("<=tablet") {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @include media("<=phone") {
+        grid-template-columns: 1fr;
+    }
+    .card {
+        height: 150px;
+        box-shadow: 2px 2px 10px rgba(1, 1, 1, 0.5);
+    }
+}
+
+.reward-forms {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.display-none {
+    display: none;
+}
+.display-block {
+    display: block;
+}

@@ -40,36 +40,33 @@
                 <label for="">Mobile</label>
                 <input type="text" name="shipping_phone" id="" class="form-control">
             </div>
+            <div class="form-group display-none" id="gift-code">
+                <label for="">Gift Card Code</label>
+                <input type="text" name="uid" id="gift-code" class="form-control">
+            </div>
 
             <h4>Payment Option</h4>
-
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="payment_method" id="" value="cash_on_delivery">
-                    Cash On Delivery
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-outline-primary btn-toggle active">
+                    <input id="gift-card-method" type="radio" class="form-check-input" name="payment_method" id="" value="cash_on_delivery"
+                        checked> Cash On Delivery
                 </label>
-            </div>
-
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="payment_method" id="" value="bkash">
-                    BKash
+                <label class="btn btn-outline-primary btn-toggle">
+                    <input id="gift-card-method" type="radio" class="form-check-input" name="payment_method" id="" value="bkash"> Bkash
                 </label>
-            </div>
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="payment_method" id="" value="wallet">
-                    Use Wallet
+                <label class="btn btn-outline-primary btn-toggle">
+                    <input id="gift-card-method" input type="radio" class="form-check-input" name="payment_method" id="" value="wallet"> Wallet
                 </label>
-            </div>
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="payment_method" id="" value="reward_point">
-                    Use Reward Point
+                <label class="btn btn-outline-primary btn-toggle">
+                    <input id="gift-card-method" type="radio" class="form-check-input" name="payment_method" id="" value="reward_point"> Reward
+                    Point
                 </label>
-            </div>
+                <label class="btn btn-outline-primary btn-toggle">
+                    <input id="gift-card-method" type="radio" class="form-check-input" name="payment_method" 
+                        value="gift_card"> Gift Card
+                </label>
+            </div><br>
             <button type="submit" class="btn btn-primary mt-3">Place Order</button>
-
         </form>
 
     </div>
