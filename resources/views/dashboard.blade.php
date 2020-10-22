@@ -75,8 +75,25 @@
                 @foreach ($orders as $order)
                     @if ($order->status !== 'completed' and $order->status !== 'decline')
                         <div class="card mr-2 my-2 p-3">
-                            <p class="h4">{{ $order->order_number }}</p>
-                            <p class="h5 my-2">{{ $order->status }}</p>
+                            <p class="h4 text-center">{{ $order->order_number }}</p>
+                            <p class="h5 my-2 badge badge-danger p-2">{{ $order->status }}</p>
+                            <h4 class="my-3">Items</h4>
+                            @foreach ($items as $itemes)
+                                @foreach ($itemes as $item)
+
+                                    @if ($order->id === $item->order_id)
+                                        @php
+                                        $prod = DB::table('products')->where('id', $item->product_id)->get()[0];
+                                        @endphp
+
+                                        <div class="order-items">
+                                            <h5>{{ $prod->name }}</h5>
+                                            <h5>{{ $item->quantity }}x</h5>
+                                            <h5 class="text-danger">{{ $item->price }}</h5>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            @endforeach
                         </div>
                     @endif
                 @endforeach
@@ -90,6 +107,22 @@
                         <div class="card mr-2 my-2 p-3">
                             <p class="h4">{{ $order->order_number }}</p>
                             <p class="h5 my-2">{{ $order->status }}</p>
+                            @foreach ($items as $item)
+                                @foreach ($itemes as $item)
+
+                                    @if ($order->id === $item->order_id)
+                                        @php
+                                        $prod = DB::table('products')->where('id', $item->product_id)->get()[0];
+                                        @endphp
+
+                                        <div class="order-items">
+                                            <h5>{{ $prod->name }}</h5>
+                                            <h5>{{ $item->quantity }}x</h5>
+                                            <h5 class="text-danger">{{ $item->price }}</h5>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            @endforeach
                         </div>
                     @endif
                 @endforeach

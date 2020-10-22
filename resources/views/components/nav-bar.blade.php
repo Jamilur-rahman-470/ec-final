@@ -29,9 +29,9 @@
                      </div>
                  </a></li>
          </ul>
-
+         {{-- Mega Menu --}}
          <ul class="navbar-nav  w-100 flex-row align-items-center justify-content-start px-3" id='fix-nav'>
-             <li class="nav-item dropdown has-megamenu active">
+             <li class="nav-item dropdown has-megamenu active" id='fix-nav-mega'>
                  <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"> SHOP </a>
                  <div class="dropdown-menu megamenu">
 
@@ -64,6 +64,7 @@
 
                  </div> <!-- dropdown-mega-menu.// -->
              </li>
+
              <li class="nav-item active">
                  <a href="{{ route('wishlists.index') }}" class="nav-link">
                      wishlist
@@ -72,24 +73,43 @@
                      </div>
                  </a>
              </li>
+             @php
+             $mobile = TCG\Voyager\Models\Category::where('name', 'Brands')->get();
+             @endphp
+             @foreach ($mobile as $item1)
+                 <li class="nav-item dropdown active" id='only-mobile'>
+                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                         Brands
+                     </a>
+
+                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                         @php
+                         $mobileInnr = TCG\Voyager\Models\Category::where('parent_id', $item1->id)->get();
+                         @endphp
+                         @foreach ($mobileInnr as $item)
+                             <a href="{{ route('products.index', ['category_id' => $item->id]) }}"
+                                 class="dropdown-item">{{ $item->name }}</a>
+                         @endforeach
+                     </div>
+                 </li>
+             @endforeach
              @guest
                  <li class="nav-item active">
                      <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                  </li>
 
              @else
-                 <li class="nav-item dropdown">
-                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                         aria-haspopup="true" aria-expanded="false" v-pre>
+                 <li class="nav-item dropdown active">
+                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                          {{ Auth::user()->name }}
                      </a>
 
-                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                     <div class="dropdown-menu active" aria-labelledby="navbarDropdown">
                          <a class="dropdown-item" href="{{ route('dash') }}">
                              Dashboard
                          </a>
                          <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">
+                                                            document.getElementById('logout-form').submit();">
                              {{ __('Logout') }}
                          </a>
                          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

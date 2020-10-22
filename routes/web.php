@@ -40,7 +40,7 @@ Route::resource('wishlists', 'WishlistController')->middleware('auth');
 Route::get('/products/search', 'ProductController@search')->name('products.search');
 
 Route::resource('products', 'ProductController');
-
+Route::get('/product/{prodId}', 'ProductSinglePage@index')->name('prod.single');
 Route::group(['prefix' => 'admin'], function () {
 
     Voyager::routes();

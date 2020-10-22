@@ -2,48 +2,40 @@
 
 @section('content')
 
-    <div class="container">
-
-
-        <h2> {{ $categoryName ?? null }} Products</h2>
-        <div class="filter">
-            <div class="card my-5 px-5 py-5">
-                <div class="one">
-                    <h4>Search by categories</h4>
-                    @php
-                    $categories = TCG\Voyager\Models\Category::where('parent_id', null)->get();
-                    @endphp
-                    <div class="links">
-                        @foreach ($categories as $catHead)
-                            <div class="dropdown ">
-                                <a href="#" class="cat-head mb-2 badge badge-primary dropdown-toggle" id="navbarDropdown"
-                                    role="button" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">{{ $catHead->name }}</a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    @php
-                                    $innrs = TCG\Voyager\Models\Category::where('parent_id', $catHead->id)->get();
-                                    @endphp
-                                    @foreach ($innrs as $innr)
-                                        <a href="{{ route('products.index', ['category_id' => $innr->id]) }}"
-                                            class="cat-sub dropdown-item">{{ $innr->name }}</a>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
+    <div class="products-shop my-2">
+        <div class="sidebar mx-2 card p-3" style="border-radius: 20px">
+            <div class="filters">
+                <h4>Filters</h4>
+                <br>
+                @php
+                $categories = TCG\Voyager\Models\Category::where('parent_id', null)->get();
+                @endphp
+                @foreach ($categories as $item)
+                <a href="{{ route('products.index', ['category_id' => $item->id]) }}"
+                    class="btn btn-primary btn-sm w-100 rounded my-2">{{ $item->name }}</a>
+                @endforeach
             </div>
         </div>
+        <div class="container">
+            <div class="shop-search w-100 mb-3 flex-row align-items-center justify-content-between card rounded p-4">
+                <h4>Search</h4>
+                <form class="form-inline my-2 my-lg-0" action="{{ route('products.search') }}" method="GET">
+                    <input class="form-control " type="text" placeholder="What are you looking for?" id='search'
+                        name="query">
+                    <button class="btn btn-primary my-2 my-sm-0" type="submit" id='search-btn'>Search</button>
+                </form>
+            </div>
+            
+            <div class="products">
 
-        <div class="products">
+                @foreach ($products as $product)
+                    @include('product.single_product')
 
-            @foreach ($products as $product)
-                @include('product.single_product')
+                @endforeach
 
-            @endforeach
+            </div>
 
         </div>
-
     </div>
 
 @endsection

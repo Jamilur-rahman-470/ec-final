@@ -1,6 +1,8 @@
-<div class="product-card">
+<div class="product-card p-3">
     <div class="img">
-        <img src="{{ asset('storage/' . $product->cover_img) }}" alt="{{ $product->name }}">
+        <a href="{{ route('prod.single', ['prodId' => $product->id]) }}">
+            <img src="{{ asset('storage/' . $product->cover_img) }}" alt="{{ $product->name }}">
+        </a>
     </div>
     <div class="body px-3 py-3">
         <small class="mt-1 badge badge-danger">Featured</small>
